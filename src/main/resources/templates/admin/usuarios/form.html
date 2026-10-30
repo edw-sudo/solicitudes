@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${form.esNuevo() ? 'Nuevo usuario' : 'Editar usuario'})}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<main class="container" style="max-width: 860px">
+    <h1 class="h3 mb-3" th:text="${form.esNuevo()} ? 'Nuevo usuario' : 'Editar usuario'">Nuevo usuario</h1>
+
+    <form th:object="${form}" method="post" class="card card-body" novalidate
+          th:action="${form.esNuevo()} ? @{/admin/usuarios/nuevo} : @{/admin/usuarios/{id}/editar(id=${form.idUsuario})}">
+
+        <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+            <p class="mb-0" th:each="e : ${#fields.globalErrors()}" th:text="${e}">Error</p>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="nombres" class="form-label">Nombres</label>
+                <input type="text" th:field="*{nombres}" class="form-control" th:errorclass="is-invalid">
+                <div class="invalid-feedback" th:errors="*{nombres}"></div>
+            </div>
+            <div class="col-md-6">
+                <label for="apellidos" class="form-label">Apellidos</label>
+                <input type="text" th:field="*{apellidos}" class="form-control" th:errorclass="is-invalid">
+                <div class="invalid-feedback" th:errors="*{apellidos}"></div>
+            </div>
+            <div class="col-md-6">
+                <label for="numeroDocumento" class="form-label">N.° de documento</label>
+                <input type="text" th:field="*{numeroDocumento}" class="form-control" th:errorclass="is-invalid"
+                       inputmode="numeric" maxlength="12">
+                <div class="invalid-feedback" th:errors="*{numeroDocumento}"></div>
+            </div>
+            <div class="col-md-6">
+                <label for="correo" class="form-label">Correo electrónico</label>
+                <input type="email" th:field="*{correo}" class="form-control" th:errorclass="is-invalid">
+                <div class="invalid-feedback" th:errors="*{correo}"></div>
+            </div>
+            <div class="col-md-6">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" th:field="*{username}" class="form-control" th:errorclass="is-invalid">
+                <div class="invalid-feedback" th:errors="*{username}"></div>
+            </div>
+            <div class="col-md-6">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" th:field="*{password}" class="form-control" th:errorclass="is-invalid"
+                       autocomplete="new-password"
+                       th:placeholder="${form.esNuevo()} ? 'Mínimo 8 caracteres' : 'Dejar en blanco para mantener la actual'">
+                <div class="invalid-feedback" th:errors="*{password}"></div>
+            </div>
+            <div class="col-md-6">
+                <label for="idRol" class="form-label">Rol</label>
+                <select th:field="*{idRol}" class="form-select" th:errorclass="is-invalid">
+                    <option value="">Seleccione un rol</option>
+                    <option th:each="r : ${roles}" th:value="${r.idRol}" th:text="${r.nombre}"
+                            th:attr="data-nombre=${r.nombre}">ROL</option>
+                </select>
+                <div class="invalid-feedback" th:errors="*{idRol}"></div>
+            </div>
+            <div class="col-md-6" id="grupoArea">
+                <label for="idArea" class="form-label">Área <small class="text-muted">(solo personal administrativo)</small></label>
+                <select th:field="*{idArea}" class="form-select" th:errorclass="is-invalid">
+                    <option value="">Seleccione un área</option>
+                    <option th:each="a : ${areas}" th:value="${a.idArea}" th:text="${a.nombre}">Área</option>
+                </select>
+                <div class="invalid-feedback" th:errors="*{idArea}"></div>
+            </div>
+            <div class="col-md-6" id="grupoCodigo">
+                <label for="codigoEstudiante" class="form-label">Código de estudiante <small class="text-muted">(obligatorio para ESTUDIANTE)</small></label>
+                <input type="text" th:field="*{codigoEstudiante}" class="form-control" th:errorclass="is-invalid">
+                <div class="invalid-feedback" th:errors="*{codigoEstudiante}"></div>
+            </div>
+        </div>
+
+        <div class="mt-4 d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a th:href="@{/admin/usuarios}" class="btn btn-outline-secondary">Cancelar</a>
+        </div>
+    </form>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+<script>
+    // Muestra el campo de área o de código de estudiante según el rol elegido.
+    (function () {
+        const rol = document.getElementById('idRol');
+        const grupoArea = document.getElementById('grupoArea');
+        const grupoCodigo = document.getElementById('grupoCodigo');
+        function actualizar() {
+            const opcion = rol.options[rol.selectedIndex];
+            const nombre = opcion ? opcion.getAttribute('data-nombre') : null;
+            grupoArea.style.display = nombre === 'PERSONAL_ADMINISTRATIVO' ? '' : 'none';
+            grupoCodigo.style.display = nombre === 'ESTUDIANTE' ? '' : 'none';
+        }
+        rol.addEventListener('change', actualizar);
+        actualizar();
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Auditoría')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<main class="container">
+    <h1 class="h3 mb-1">Auditoría</h1>
+    <p class="text-muted small mb-3">Registro de solo lectura de accesos y acciones de administración (RF-17).</p>
+
+    <!-- CU-09 Consultar auditoría -->
+    <form th:action="@{/admin/auditoria}" method="get" class="card card-body mb-3">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-3">
+                <label for="usuario" class="form-label small mb-1">Usuario</label>
+                <input type="text" id="usuario" name="usuario" th:value="${usuario}" class="form-control">
+            </div>
+            <div class="col-md-3">
+                <label for="accion" class="form-label small mb-1">Acción</label>
+                <select id="accion" name="accion" class="form-select">
+                    <option value="">Todas</option>
+                    <option th:each="a : ${acciones}" th:value="${a.name()}" th:text="${a.name()}"
+                            th:selected="${a.name() == accion}">ACCION</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="desde" class="form-label small mb-1">Desde</label>
+                <input type="date" id="desde" name="desde" th:value="${desde}" class="form-control">
+            </div>
+            <div class="col-md-2">
+                <label for="hasta" class="form-label small mb-1">Hasta</label>
+                <input type="date" id="hasta" name="hasta" th:value="${hasta}" class="form-control">
+            </div>
+            <div class="col-md-2 d-grid">
+                <button type="submit" class="btn btn-secondary">Buscar</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                <tr>
+                    <th>Fecha y hora</th>
+                    <th>Usuario</th>
+                    <th>Acción</th>
+                    <th>Entidad</th>
+                    <th>Detalle</th>
+                    <th>IP</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(registros)}">
+                    <td colspan="6" class="text-center text-muted py-4">No hay registros para los filtros elegidos</td>
+                </tr>
+                <tr th:each="r : ${registros}">
+                    <td class="text-nowrap" th:text="${#temporals.format(r.fechaEvento, 'dd/MM/yyyy HH:mm:ss')}">29/09/2026 21:40:00</td>
+                    <td th:text="${r.username}">admin01</td>
+                    <td>
+                        <span class="badge"
+                              th:classappend="${r.accion == 'LOGIN_FALLIDO'} ? 'bg-danger'
+                                            : (${r.accion == 'BAJA'} ? 'bg-warning text-dark'
+                                            : (${r.accion == 'LOGIN_OK' or r.accion == 'LOGOUT'} ? 'bg-secondary' : 'bg-primary'))"
+                              th:text="${r.accion}">CREAR</span>
+                    </td>
+                    <td class="small" th:text="${r.entidad != null} ? ${r.entidad} + ' #' + ${r.idEntidad} : '—'">USUARIO #3</td>
+                    <td class="small" th:text="${r.detalle} ?: '—'">Detalle</td>
+                    <td class="small text-muted" th:text="${r.ipOrigen} ?: '—'">127.0.0.1</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <p class="text-muted small mt-2" th:text="${#lists.size(registros)} + ' registro(s) (máximo 500)'">0 registro(s)</p>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

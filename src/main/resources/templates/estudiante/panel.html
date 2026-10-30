@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Estudiante')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<main class="container">
+    <h1 class="h3 mb-3">Panel del estudiante</h1>
+    <div class="card">
+        <div class="card-body">
+            <p class="mb-1">Bienvenido(a), <strong th:text="${usuarioActual}">usuario</strong>.</p>
+            <p class="text-muted mb-0">El registro y el seguimiento de solicitudes se habilitarán en el
+                Sprint 3 (Registro y Seguimiento de Solicitudes).</p>
+        </div>
+    </div>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

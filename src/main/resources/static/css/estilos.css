@@ -1,0 +1,66 @@
+body { background: #f4f6f9; }
+.bg-institucional { background: #1f3b5c; }
+.card { border: none; box-shadow: 0 1px 3px rgba(0, 0, 0, .08); }
+
+/* Colores de estados */
+.estado-REGISTRADA  { background: #6c757d; }
+.estado-DERIVADA    { background: #0d6efd; }
+.estado-EN_ATENCION { background: #0dcaf0; color: #052c65; }
+.estado-OBSERVADA   { background: #ffc107; color: #3d2e00; }
+.estado-RESUELTA    { background: #198754; }
+.estado-CERRADA     { background: #212529; }
+.estado-ANULADA     { background: #dc3545; }
+
+/* Línea de tiempo del historial */
+.timeline { list-style: none; padding-left: 0; border-left: 3px solid #ced4da; margin-left: .5rem; }
+.timeline li { position: relative; padding: 0 0 1.25rem 1.25rem; }
+.timeline li::before { content: ""; position: absolute; left: -.55rem; top: .3rem; width: .8rem; height: .8rem;
+    border-radius: 50%; background: #1f3b5c; }
+
+
+/* ---------- Inicio de sesión ---------- */
+.login-page { background: #eef2f7; min-height: 100vh; }
+.login-wrap { display: flex; min-height: 100vh; }
+.login-brand {
+    flex: 1 1 50%; color: #fff; padding: 3.5rem 4rem; display: flex; flex-direction: column; justify-content: center;
+    background: linear-gradient(150deg, #1f3b5c 0%, #2b5482 60%, #3a6ea5 100%); position: relative; overflow: hidden;
+}
+.login-brand::after {
+    content: ""; position: absolute; width: 420px; height: 420px; right: -140px; bottom: -160px;
+    border-radius: 50%; background: rgba(255, 255, 255, .06);
+}
+.brand-logo {
+    width: 64px; height: 64px; border-radius: 16px; background: rgba(255, 255, 255, .14);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;
+}
+.brand-title { font-size: 2rem; font-weight: 700; margin-bottom: .25rem; color: #fff; }
+.login-card h2 { color: #1f3b5c; }
+.brand-sub { color: rgba(255, 255, 255, .75); margin-bottom: 2.5rem; }
+.brand-list { list-style: none; padding: 0; margin: 0; max-width: 420px; position: relative; z-index: 1; }
+.brand-list li { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+.brand-list strong { display: block; }
+.brand-list span:not(.brand-ico) { color: rgba(255, 255, 255, .75); font-size: .92rem; }
+.brand-ico {
+    flex: 0 0 40px; height: 40px; border-radius: 10px; background: rgba(255, 255, 255, .14);
+    display: flex; align-items: center; justify-content: center;
+}
+.brand-foot { margin-top: auto; padding-top: 2rem; color: rgba(255, 255, 255, .55); font-size: .85rem; }
+.login-form { flex: 1 1 50%; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem; }
+.login-card {
+    width: 100%; max-width: 400px; background: #fff; border-radius: 16px; padding: 2.5rem 2.25rem;
+    box-shadow: 0 10px 30px rgba(31, 59, 92, .12);
+}
+.login-card .input-group-text { background: #f4f6f9; color: #1f3b5c; }
+.login-card .form-control:focus { border-color: #3a6ea5; box-shadow: 0 0 0 .2rem rgba(58, 110, 165, .2); }
+.btn-institucional { background: #1f3b5c; border-color: #1f3b5c; color: #fff; }
+.btn-institucional:hover, .btn-institucional:focus { background: #2b5482; border-color: #2b5482; color: #fff; }
+.demo-box { background: #f4f6f9; border-radius: 10px; padding: .75rem 1rem; font-size: .85rem; color: #495057; }
+.demo-box code { color: #1f3b5c; }
+
+/* En pantallas pequeñas el panel institucional se reduce a una franja superior */
+@media (max-width: 991.98px) {
+    .login-wrap { flex-direction: column; }
+    .login-brand { flex: none; padding: 2rem 1.5rem; }
+    .brand-list, .brand-foot { display: none; }
+    .brand-sub { margin-bottom: 0; }
+}

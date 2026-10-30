@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Personal administrativo')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<main class="container">
+    <h1 class="h3 mb-3">Panel del personal administrativo</h1>
+    <div class="card">
+        <div class="card-body">
+            <p class="mb-1">Bienvenido(a), <strong th:text="${usuarioActual}">usuario</strong>.</p>
+            <p class="text-muted mb-0">La bandeja de solicitudes, la derivación y el cambio de estados
+                se habilitarán en el Sprint 4 (Gestión Administrativa).</p>
+        </div>
+    </div>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
