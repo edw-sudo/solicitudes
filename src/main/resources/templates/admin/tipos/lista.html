@@ -40,7 +40,7 @@
                            class="btn btn-sm btn-outline-primary">Editar</a>
                         <form th:if="${t.activo}" th:action="@{/admin/tipos/{id}/baja(id=${t.idTipoSolicitud})}"
                               method="post" class="d-inline"
-                              onsubmit="return confirm('¿Dar de baja este tipo de solicitud? Ya no se ofrecerá para nuevas solicitudes.');">
+                              data-confirm="¿Dar de baja este tipo de solicitud? Ya no se ofrecerá para nuevas solicitudes.">
                             <button type="submit" class="btn btn-sm btn-outline-danger">Dar de baja</button>
                         </form>
                         <form th:if="${!t.activo}" th:action="@{/admin/tipos/{id}/reactivar(id=${t.idTipoSolicitud})}"

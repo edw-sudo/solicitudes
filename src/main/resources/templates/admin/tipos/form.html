@@ -3,7 +3,7 @@
 <head th:replace="~{fragments/layout :: head(${form.esNuevo() ? 'Nuevo tipo de solicitud' : 'Editar tipo de solicitud'})}"></head>
 <body>
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
-<main class="container" style="max-width: 720px">
+<main class="container ancho-720">
     <h1 class="h3 mb-3" th:text="${form.esNuevo()} ? 'Nuevo tipo de solicitud' : 'Editar tipo de solicitud'">Nuevo tipo</h1>
 
     <form th:object="${form}" method="post" class="card card-body" novalidate

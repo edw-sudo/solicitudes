@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Iniciar sesión | Solicitudes administrativas</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
 <body class="login-page">
@@ -88,14 +89,6 @@
     </section>
 </main>
 
-<script>
-    // Mostrar u ocultar la contraseña
-    document.getElementById('verClave').addEventListener('click', function () {
-        const campo = document.getElementById('password');
-        const visible = campo.type === 'text';
-        campo.type = visible ? 'password' : 'text';
-        this.textContent = visible ? 'Ver' : 'Ocultar';
-    });
-</script>
+<script th:src="@{/js/login.js}"></script>
 </body>
 </html>

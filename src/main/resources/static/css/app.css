@@ -1,0 +1,13 @@
+/* Estilos propios (antes estaban en atributos style="..." del HTML) */
+.fondo-pagina         { background: #f5f7fa; }
+.margen-superior      { margin-top: 10vh; }
+.ancho-720            { max-width: 720px; }
+.ancho-860            { max-width: 860px; }
+.navbar-institucional { background: #1f4e79; }
+
+/* Movido desde fragments/layout.html */
+body { background: #f5f7fa; }
+        .card { border: 1px solid #dde3ea; }
+        .table thead th { background: #e2e8f0; font-weight: 600; }
+        .badge-activo { background: #2f855a; }
+        .badge-inactivo { background: #718096; }

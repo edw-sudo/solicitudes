@@ -21,9 +21,19 @@ import pe.edu.instituto.solicitudes.service.Roles;
  * - Acceso por rol: /admin/** (ADMINISTRADOR), /administrativo/** (PERSONAL_ADMINISTRATIVO y ADMINISTRADOR),
  *   /estudiante/** (ESTUDIANTE).
  * - Registra en la auditoría los inicios de sesión correctos, fallidos y los cierres de sesión.
+ * - Cabecera Content-Security-Policy: solo se cargan recursos del propio servidor (hallazgo ZAP 10038).
  */
 @Configuration
 public class SecurityConfig {
+
+    /** Política CSP: todo desde el propio servidor; sin plugins, sin iframes externos. */
+    private static final String CSP =
+            "default-src 'self'; "
+            + "img-src 'self' data:; "
+            + "object-src 'none'; "
+            + "base-uri 'self'; "
+            + "form-action 'self'; "
+            + "frame-ancestors 'none'";
 
     @Bean
     PasswordEncoder passwordEncoder() {
@@ -48,7 +58,9 @@ public class SecurityConfig {
                 .logoutUrl("/logout")
                 .logoutSuccessHandler(cierreDeSesion(auditoria))
                 .permitAll())
-            .exceptionHandling(ex -> ex.accessDeniedPage("/403"));
+            .exceptionHandling(ex -> ex.accessDeniedPage("/403"))
+            .headers(headers -> headers
+                .contentSecurityPolicy(csp -> csp.policyDirectives(CSP)));
         return http.build();
     }
 
